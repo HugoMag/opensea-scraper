@@ -17,7 +17,7 @@ const { warnIfNotUsingStealth } = require("../helpers/helperFunctions.js");
  *   browserInstance: browser instance created with puppeteer.launch() (bring your own puppeteer instance)
  * }
  */
-const rankings = async (type = "total", optionsGiven = {}, chain = undefined) => {
+const rankings = async (type = "total", optionsGiven = {}, chain = undefined, category = undefined) => {
   const optionsDefault = {
     debug: false,
     logs: false,
@@ -39,7 +39,7 @@ const rankings = async (type = "total", optionsGiven = {}, chain = undefined) =>
   customPuppeteerProvided && warnIfNotUsingStealth(browser);
 
   const page = await browser.newPage();
-  const url = getUrl(type, chain);
+  const url = getUrl(type, chain, category);
   logs && console.log("...opening url: " + url);
   await page.goto(url);
 
@@ -82,19 +82,21 @@ function _parseNextDataVarible(__NEXT_DATA__) {
   return __NEXT_DATA__.props.relayCache[0][1].json.data.rankings.edges.map(obj => extractCollection(obj.node));
 }
 
-function getUrl(type, chain) {
-  chainExtraQueryParameter = chain ? `&chain=${chain}` : ''
+function getUrl(type, chain, category) {
+  const chainExtraQueryParameter = chain ? `&chain=${chain}` : '';
+  const categoryExtraQueryParameter = category ? `&category=${category}` : '';
+  const extraParams = `${categoryExtraQueryParameter}${chainExtraQueryParameter}`;
   if (type === "24h") {
-    return `https://opensea.io/rankings?sortBy=one_day_volume${chainExtraQueryParameter}`;
+    return `https://opensea.io/rankings?sortBy=one_day_volume${extraParams}`;
 
   } else if (type === "7d") {
-    return `https://opensea.io/rankings?sortBy=seven_day_volume${chainExtraQueryParameter}`;
+    return `https://opensea.io/rankings?sortBy=seven_day_volume${extraParams}`;
 
   } else if (type === "30d") {
-    return `https://opensea.io/rankings?sortBy=thirty_day_volume${chainExtraQueryParameter}`;
+    return `https://opensea.io/rankings?sortBy=thirty_day_volume${extraParams}`;
 
   } else if (type === "total") {
-    return `https://opensea.io/rankings?sortBy=total_volume${chainExtraQueryParameter}`;
+    return `https://opensea.io/rankings?sortBy=total_volume${extraParams}`;
   }
 
   throw new Error(`Invalid type provided. Expected: 24h,7d,30d,total. Got: ${type}`);
