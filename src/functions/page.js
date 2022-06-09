@@ -49,8 +49,7 @@ const pageInfo = async (slug, optionsGiven = {}) => {
   logs && console.log("extracting __NEXT_DATA variable");
   const data = await page.evaluate(() => {
     console.log("evaluating page...");
-    const nextDataStr = document.querySelectorAll("div.fresnel-container");
-    return JSON.parse(nextDataStr);
+    return document.getElementsByClassName("fresnel-container");
   });
   return data;
 }
