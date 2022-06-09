@@ -7,6 +7,7 @@ const axios = require("axios");
 const basicInfo = async (slug) => {
   const response = await axios.get(`https://api.opensea.io/collection/${slug}`);
   const collectionObj = response.data.collection;
+  console.log(JSON.stringify(response.data));
   const stats = _getStats(collectionObj);
   return {
     slug: slug,
