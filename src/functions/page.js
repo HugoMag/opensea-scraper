@@ -17,7 +17,7 @@ const { warnIfNotUsingStealth } = require("../helpers/helperFunctions.js");
  *   browserInstance: browser instance created with puppeteer.launch() (bring your own puppeteer instance)
  * }
  */
-const pageInfo = async (slug) => {
+const pageInfo = async (slug, optionsGiven = {}) => {
   const optionsDefault = {
     debug: false,
     logs: false,
