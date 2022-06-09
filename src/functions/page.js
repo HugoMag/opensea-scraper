@@ -26,7 +26,7 @@ const pageInfo = async (slug, optionsGiven = {}) => {
   const options = { ...optionsDefault, ...optionsGiven };
   const { debug, logs, browserInstance } = options;
   const customPuppeteerProvided = Boolean(optionsGiven.browserInstance);
-  logs && console.log(`=== OpenseaScraper.rankings() ===\n`);
+  logs && console.log(`=== OpenseaScraper.page() ===\n`);
 
   // init browser
   let browser = browserInstance;
@@ -48,7 +48,8 @@ const pageInfo = async (slug, optionsGiven = {}) => {
 
   logs && console.log("extracting __NEXT_DATA variable");
   const data = await page.evaluate(() => {
-    const nextDataStr = document.querySelectorAll("div.fresnel-container").innerText;
+    console.log("evaluating page...");
+    const nextDataStr = document.querySelectorAll("div.fresnel-container");
     return JSON.parse(nextDataStr);
   });
   return data;
