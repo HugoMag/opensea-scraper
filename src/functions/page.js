@@ -48,7 +48,7 @@ const pageInfo = async (slug, optionsGiven = {}) => {
 
   logs && console.log("extracting __NEXT_DATA variable");
   const data = await page.evaluate(() => {
-    console.log("evaluating page...");
+    console.log("evaluating page..." + JSON.stringify(document.body.innerHTML));
     return document.getElementsByClassName("fresnel-container");
   });
   return data;
