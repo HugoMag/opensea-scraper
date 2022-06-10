@@ -41,6 +41,11 @@ const pageInfo = async (slug, optionsGiven = {}) => {
   const page = await browser.newPage();
   const url = `https://opensea.io/collection/${slug}`;
   logs && console.log("...opening url: " + url);
+
+  const agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.61 Safari/537.36';
+
+  await page.setUserAgent(agent);
+
   await page.goto(url);
 
   logs && console.log("...🚧 waiting for cloudflare to resolve");
