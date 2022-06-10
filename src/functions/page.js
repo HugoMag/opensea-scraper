@@ -53,7 +53,7 @@ const pageInfo = async (slug, optionsGiven = {}) => {
 
   logs && console.log("extracting __NEXT_DATA variable");
 
-  await page.waitForSelector('.fresnel-greaterThan-md', {visible: true});
+  await page.waitForSelector('.fresnel-greaterThan-md');
 
   const data = await page.evaluate(() => {
     return document.body.innerHTML;
