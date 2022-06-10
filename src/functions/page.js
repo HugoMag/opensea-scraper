@@ -47,6 +47,9 @@ const pageInfo = async (slug, optionsGiven = {}) => {
   await page.waitForSelector('.cf-browser-verification', {hidden: true});
 
   logs && console.log("extracting __NEXT_DATA variable");
+
+  await page.waitForSelector('.fresnel-greaterThan-md', {visible: true});
+
   const data = await page.evaluate(() => {
     return document.body.innerHTML;
   });
